@@ -2,11 +2,11 @@ import React, { useRef } from 'react'
 import todo_icon from '../assets/todo_icon.png' 
 import TodoItems from './ToDoItems'
 
-const ToDO = () => {
+const ToDo = () => {
     const inputRef = useRef();
 
   const add = () => {
-        const inputText = inputRef.current.value;
+        const inputText = inputRef.current.value.trim();
         console.log(inputText);
   }
 
@@ -39,4 +39,4 @@ const ToDO = () => {
   )
 }
 
-export default ToDO
+export default ToDo
