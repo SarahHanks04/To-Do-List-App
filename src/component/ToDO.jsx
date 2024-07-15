@@ -1,13 +1,46 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import todo_icon from '../assets/todo_icon.png' 
 import TodoItems from './ToDoItems'
+import { text } from '@fortawesome/fontawesome-svg-core';
 
 const ToDo = () => {
+
+    const [todoList, setTodoList] = useState([]);
+
     const inputRef = useRef();
 
   const add = () => {
-        const inputText = inputRef.current.value.trim();
-        console.log(inputText);
+    const inputText = inputRef.current.value.trim();
+
+    if (inputText === "") {
+        return null;
+    }
+
+    const newTodo = {
+        id: Date.now,
+        text: inputText,
+        isComplete: false
+    }
+    setTodoList((prev) => [...prev, newTodo]);
+    inputRef.current.value = "";
+  }
+
+  const deleteTodo = (id) => {
+    setTodoList((prevTodos) => {
+        return prevTodos.filter((todo) => todo.id !== id)
+    })
+  }
+
+  const toggle = () => {
+    setTodoList((prevTodos) => {
+        return prevTodos.map((todo) => {
+            if (todo.id === id) {
+                return{...todo, isComplete: !todo.isComplete}
+            }
+
+            return todo;
+        })
+    })
   }
 
 
@@ -31,8 +64,12 @@ const ToDo = () => {
 
       {/* TODO LIST */}
       <div>
-        <TodoItems text="Learn Coding" />
-        <TodoItems text="Learn Coding From Sarah" />
+
+        {todoList.map((item, index) => {
+        return <TodoItems key = {index} text={item.text} id={item.id} isComplete={item.isComplete} deleteTodo={deleteTodo} />
+      })}
+        {/* <TodoItems text="Learn Coding" />
+        <TodoItems text="Learn Coding From Sarah" /> */}
       </div>
 
     </div>
