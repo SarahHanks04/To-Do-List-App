@@ -41,6 +41,7 @@ const ToDo = () => {
         });
     });
   };
+  
 
   useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(todoList));
